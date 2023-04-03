@@ -165,9 +165,13 @@ stderr(Standard Error, 표준 에러) : 프로그램 실행 중 오류가 발생
 ![image](https://user-images.githubusercontent.com/21374239/229512920-4983f5e5-fc76-4a09-90d5-eb8bf3496c5e.png)
 
 유닉스계열의 파일 시스템은 크게 4가지 블록으로 구성되어 있습니다.
+
 Boot block : 부팅에 필요한 파일을 가지고 있습니다. 어떤 파일 시스템이라도 가장 먼저 등장하는 블록입니다.
+
 Super block : 파일 시스템에 대한 전체적인 정보를 가지고 있습니다. 전체적인 정보란 비어있는 블록은 무엇이고 사용중인 블록은 무엇이고, 어디부터 어디까지가 Inode list 인지, Data block 인지에 대한 정보입니다.
+
 Inode list : 모든 Inode 파일을 저장하고 있습니다. Inode 파일이라는 것은 실제 파일들에 대한 정보를 가지고 있는 meta data 입니다. 소유자, 실제 파일 데이터 블록 사이즈, 실제 파일 데이터 블록 위치 등의 정보입니다.
+
 Data block : 실제 데이터가 저장되어 있습니다. 데이터는 블록형태로 저장되어 있는데 블록당 사이즈가 보통 4KB 라고 합니다.
 
 i-node는 전통적인 유닉스 계통 파일 시스템에서 사용하는 자료 구조입니다.
@@ -193,28 +197,38 @@ file descriptor table은 프로세스 당 한개씩 존재하고 file descriptor
 
  
 예를 들어서 youtube 프로세스가 여러 파일을 사용하려고 합니다. 그 때 사용하는 file descriptor 는 접근하려는 파일에 따라서
+
 인터넷 연결 소켓 디스크립터
+
 동영상 파일 디스크립터
+
 오디오 디바이스 디스크립터
+
 키보드, 마우스 디바이스 디스크립터
+
 등이 있습니다. 
 
 youtube 프로세스가 사용하는 file descriptor에서 3번이 동영상 파일 디스크립터라면 이것을 통해 동영상 파일을 열게 됩니다. 열려있는 파일에 대한 정보가 들어있는 open file table은 모든 프로세스가 공용으로 사용합니다.
 
  
 그림에서 fd 0, 1, 2 가 각각 stdin, stdout, stderr 이라고 써져 있죠? 이것은 어떤 프로세스든 기본적으로 할당되는 디스크립터 입니다. 
+
 stdin(Standard Input, 표준 입력) : 키보드나 파일 등으로부터 데이터를 읽어들일 때 사용됩니다.
+
 stdin(Standard Input, 표준 출력) : 프로그램에서 출력한 결과를 화면이나 파일에 쓸 때 사용됩니다.
+
 stderr(Standard Error, 표준 에러) : 프로그램 실행 중 오류가 발생했을 때 오류 메시지를 출력하는데 사용됩니다.
 
 예를 들어서, 사용자로부터 두 수를 입력받아서 더한 결과를 출력하는 프로그램이 있을 때 사용자로부터 입력을 받기 위해서는 stdin을 사용해야 하며, 결과를 출력하기 위해서는 stdout을 사용해야 합니다. 또한, 입력값이 잘못된 경우 오류 메시지를 출력해야 하는데, 이때는 stderr을 사용합니다.
 
 실제로 한번 볼까요?
+
 ![image](https://user-images.githubusercontent.com/21374239/229513094-1294dc8f-8d95-4ed6-ae8c-b993ebac771f.png)
 
 리눅스 환경에서 ps -ef 명령어로 현재 동작하고 있는 프로세스를 확인할 수 있습니다. e는 모든 프로세스, f는 자세히를 의미하는 옵션입니다. ps -ef 만 치면 너무 많이 나와서 위의 그림에서는 | grep sshd 를 추가로 입력해서 sshd가 들어가는 프로세스만 출력하였습니다. 맨 윈쪽이 user ID 이고 두번째가 Process ID 입니다. PID가 2633인 프로세스의 file descroptor를 볼까요?
 
 ![image](https://user-images.githubusercontent.com/21374239/229513129-c9534a1d-561c-4a2e-9169-579d60a8e14d.png)
+
 sudo ls -trn /proc/[PID]/fd 명령어로 확인할 수 있습니다. 소켓, 파이프 등을 사용하고 있네요!
 
 
