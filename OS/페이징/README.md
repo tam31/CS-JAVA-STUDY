@@ -190,6 +190,9 @@ ls -i 명령어로 파일들의 i-node 값을 확인 할 수 있습니다.
 바로 유닉스계열의 운영체제가 사용하는 file descriptor, 윈도우에서는 이와 비슷한 file handle 가 있습니다.
 
 
+
+
+
 file descriptor에 대해서 알아볼까요?
 
 
