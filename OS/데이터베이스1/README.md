@@ -214,19 +214,18 @@
 - DROP 명령어는 데이블 전체를 삭제, 공간, 객체를 삭제한다. 삭제 후 절대 되돌릴 수 없다.
 
 #### INSERT/ UPDATE/ DELETE/ LIKE/ null
-INSERT
-INSERT INTO [테이블명] ([칼럼1, [칼럼2], [칼럼3 ..)
+- INSERT INTO [테이블명] ([칼럼1, [칼럼2], [칼럼3 ..)
 VALUES ([값1], [값2], [값3] ..)
 - 모든 칼럼을 입력할 경우 입력할 칼럼 생략 가능
 - VALUES 여러개 써서 동시에 여러 행 INSERT 가능
 
-UPDATE
-UPDATE [테이블명]
+
+- UPDATE [테이블명]
 SET [컬럼1] = [값1]
    ,[컬럼2] = [값2]
 WHERE [조건]
 
-DELETE
+- DELETE
 FROM [테이블명]
 WHERE [조건]
 
@@ -246,22 +245,22 @@ null
 
 #### 평균, 합계, 최고, 최저
 평균
-SELECT AVG(컬럼)
+- SELECT AVG(컬럼)
 FROM 테이블명
 WHERE 조건
 
 합계
-SELECT SUM(컬럼)
+- SELECT SUM(컬럼)
 FROM 테이블명
 WHERE 조건
 
 최고
-SELECT MAX(컬럼)
+- SELECT MAX(컬럼)
 FROM 테이블명
 WHERE 조건
 
 최저
-SELECT MIN(컬럼)
+- SELECT MIN(컬럼)
 FROM 테이블명
 WHERE 조건
 
