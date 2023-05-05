@@ -295,7 +295,7 @@ WHERE 컬럼 NOT IN (A','B)
 
 #### 날짜 관련 함수
 SYSDATE
--시스템에 저장된 현재 날짜를 반환하는 함수
+- 시스템에 저장된 현재 날짜를 반환하는 함수
 SELECT SYSDATE FROM DUAL;
 
 ROUND
