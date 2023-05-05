@@ -179,13 +179,13 @@
 - 명확한 조인 조건 제공 : 조인 조건을 명확하게 제공하지 않을 경우, 의도치 않게 CROSS JOIN이 수행될 수 있다.
 
 #### 쿼리 수행 순서 설명(select -> from -> where -> group by -> having -> column -> order by -> limit)
-- 1. FROM : SELECT 문에 필요한 테이블 선택
-- 2. WHERE : WHERE 조건절을 이용하여 행(row) 데이터 필터링
-- 3. GROUP BY : GROUP BY 절을 이용하여 특정 컬럼의 그룹화를 수행
-- 4. HAVING : HAVING 절을 이용하여 그룹화된 결과에 대한 조건 필터링
-- 5. SELECT : SELECT 절에서 사용할 컬럼 선택
-- 6. ORDER BY : ORDER BY 절을 이용하여 결과 데이터 정렬
-- 7. LIMIT : LMIT 절을 이용하여 출력할 데이터의 개수 제한
+1. FROM : SELECT 문에 필요한 테이블 선택
+2. WHERE : WHERE 조건절을 이용하여 행(row) 데이터 필터링
+3. GROUP BY : GROUP BY 절을 이용하여 특정 컬럼의 그룹화를 수행
+4. HAVING : HAVING 절을 이용하여 그룹화된 결과에 대한 조건 필터링
+5. SELECT : SELECT 절에서 사용할 컬럼 선택
+6. ORDER BY : ORDER BY 절을 이용하여 결과 데이터 정렬
+7. LIMIT : LMIT 절을 이용하여 출력할 데이터의 개수 제한
 
 #### HAVING과 WHERE의 차이를 설명해주세요.
 - Having절은 WHERE절과 비슷하지만 그룹 전체 즉, 그룹을 나타내는 결과 집합의 행에만 적용된다.
