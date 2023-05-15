@@ -10,11 +10,13 @@
 #### 트랜잭션과 Lock
 - 멀티 트랙잭션 환경에서 데이터베이스의 일관성과 무결성을 유지하려면 트랜잭션의 순차적 진행을 보장할 수 있는 장치가 필요하다.
 - 예를들어 한명이 도서관의 좌석을 예약하는 중에 다른 한명이 같은 좌석을 예약할 수 없게 하여 한명만 좌석을 배정받을 수 있게한다.
+
 Shared lock (공유 잠금)
 - 한 트랜잭션이 리소스를 읽고 있을 때에는 다른 트랙잭션도 읽을 수는 있지만 변경은 못하게 막는 것.
 - 어떤 트랜잭션에서 데이터를 읽고자 할 때 shared lock은 허용이 되지만 exclusive lock은 불가능하다.
 - 어떤 자원에 shared lock이 동시에 여러개 적용될 수 있다.
 - 어떤 자원에 shared lock이 하나라도 걸려있으면 exclusive lock을 걸 수 없다.
+
 Exclusive lock (배타적 잠금)
 - 한 트랜잭션이 데이터를 변경 중일 때는 완료될 때까지 다른 트랜잭션이 읽거나 변경하지 못하게 막는 것.
 - exclusive lock에 걸리면 shared lock을 걸 수 없다.
@@ -163,6 +165,7 @@ ORM 프레임워크를 사용하기 위한 추가적인 러닝 커브가 필요�
 - MSSQL DB_URL = jdbc:sqlserver:ip:1433;DatabaseName=DB명
 - MySQL DB_URL = jdbc:mysql://ip:3306/DB명
 
+
 3. SQL문 실행을 위한 객체 생성
 
 3.1 파라미터를 입력 받아 동적인 쿼리문을 실행할 경우
@@ -170,6 +173,7 @@ ORM 프레임워크를 사용하기 위한 추가적인 러닝 커브가 필요�
 
 3.2 정적인 쿼리문을 실행할 경우
 - Statement stmt = conn.createStatement();
+
 
 4. SQL문 실행
 String SQL = "insert into modell values(?,?,?)";
