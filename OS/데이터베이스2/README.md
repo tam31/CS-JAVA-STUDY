@@ -1,16 +1,62 @@
 ## 트랜잭션
 
 #### 트랜잭션이란 무엇인지 설명해주세요
+- 트랜잭션이란, 데이터베이스의 상태를 변화시키기 해서 수행하는 작업의 단위를 뜻한다.
+- 상태를 변화시킨다는 것은 SELECT, UPDATE, INSERT, DELETE 와 같은 SQL을 이용해서 데이터베이스에 접근 하는 것을 의미한다.
+- 트랜잭션 하나는 SQL 하나가 될 수도 있고 SQL 여러개가 될 수도 있다.
+- 예를 들어 상품을 구매하는 API가 있다고 하자. 구매를 하기 위한 과정이 1. 유효한 사용자인지 확인, 2. 상품 정보 가져오기, 3. 상품 구매하기 라고 한다면 SQL은 SELECT, SELECT, INSERT가 된다. 이 3개의 SQL이 하나의 트랜잭션이 되는 것이다.
+
 
 #### 트랜잭션과 Lock
+- 멀티 트랙잭션 환경에서 데이터베이스의 일관성과 무결성을 유지하려면 트랜잭션의 순차적 진행을 보장할 수 있는 장치가 필요하다.
+- 예를들어 한명이 도서관의 좌석을 예약하는 중에 다른 한명이 같은 좌석을 예약할 수 없게 하여 한명만 좌석을 배정받을 수 있게한다.
+Shared lock (공유 잠금)
+- 한 트랜잭션이 리소스를 읽고 있을 때에는 다른 트랙잭션도 읽을 수는 있지만 변경은 못하게 막는 것.
+- 어떤 트랜잭션에서 데이터를 읽고자 할 때 shared lock은 허용이 되지만 exclusive lock은 불가능하다.
+- 어떤 자원에 shared lock이 동시에 여러개 적용될 수 있다.
+- 어떤 자원에 shared lock이 하나라도 걸려있으면 exclusive lock을 걸 수 없다.
+Exclusive lock (배타적 잠금)
+- 한 트랜잭션이 데이터를 변경 중일 때는 완료될 때까지 다른 트랜잭션이 읽거나 변경하지 못하게 막는 것.
+- exclusive lock에 걸리면 shared lock을 걸 수 없다.
+- exclusive lock에 걸린 테이블, row 에 대해 다른 트랜잭션이 exclusive lock을 걸 수 없다.
+
 
 #### 트랜잭션의 특성(ACID)에 대해 설명해주세요
+원자성 (Atomicity)
+- 트랜잭션이 DB에 모두 반영되거나, 전혀 반영되지 않거나를 뜻한다.
+- All or Nothing을 생각하면 된다.
+일관성 (Consistency)
+- 트랜잭션 작업 처리의 결과가 항상 일관되어야 한다를 뜻한다.
+- 트랜잭션이 진행되는 동안에 데이터베이스가 변경 되더라도 업데이트된 데이터베이스로 트랜잭션이 진행되는것이 아니라, 처음에 트랜잭션을 진행 하기 위해 참조한 데이터베이스로 진행된다. 이렇게 함으로써 각 사용자는 일관성 있는 데이터를 볼 수 있는 것이다.
+독립성 (Isolation)
+- 둘 이상의 트랜잭션이 동시에 실행되고 있을 경우 하나의 트랜잭션은 다른 트랜잭션에 끼어들 수 없다.
+- 즉, 각각의 트랜잭션은 독립적이라 서로 간섭이 불가능하다.
+- 하나의 트랜잭션이 완료될때까지, 다른 트랜잭션이 해당 트랜잭션의 결과를 참조할 수 없다.
+지속성 (Durability)
+- 트랜잭션이 성공적으로 완료되면 영구적으로 결과에 반영되어야 함을 뜻한다.
+- 보통 commit 이 된다면 지속성은 만족할 수 있다.
+
 
 #### 트랜잭션의 상태
+![image](https://github.com/gurrl9823/CS-JAVA-STUDY/assets/21374239/654475a4-69b0-4f26-81e7-11ab231febd2)
+트랜잭션은 논리적으로 5가지의 상태에 있을 수 있다.
+Active
+- 트랜잭션이 현재 실행 중인 상태
+Failed
+- 트랜잭이 실행되다 오류가 발생해서 중단된 상태
+Aborted
+- 브랜잭션이 비정상 종료되어 Rollback 이 수행된 상태
+Partially Committed
+- 트랜잭션의 연산이 마지막까지 실행되고 Commit이 되기 직전 상태
+Committed
+- 트랜잭션이 성공적으로 종료되어 Commit 연산을 실행한 후의 상태
+
 
 #### 트랜잭션을 사용할 때 주의할 점
+- 트랜잭션은 꼭 필요한 최소의 코드에만 적용하는 것이 좋다.
+- 여러 개의 트랜잭션으로 쪼개서 트랜잭션의 범위를 최소화하라는 의미다.
+- 일반적으로 데이터베이스 커넥션의 개수가 제한적이다. 그런데 각 단위 프로그램이 커넥션을 소유하는 시간이 길어지면 사용 가능한 여유 커넥션의 개수는 줄어들게 된다. 이러면 각 단위 프로그램에서 커넥션을 가져가기 위해 기다려야 하는 상황이 발생할 수도 있기 때문이다.
 
-#### Statement vs PreparedStatement
 
 ---
 
@@ -47,6 +93,10 @@
 ## Redis란
 
 #### Redis정의
+REDIS(REmote Dictionary Server)는 메모리 기반의 “키-값” 구조 데이터 관리 시스템이며,
+모든 데이터를 메모리에 저장하고 조회하기에 빠른 Read, Write 속도를 보장하는 비 관계형 데이터베이스이다.
+레디스는 크게 5가지< String, Set, Sorted Set, Hash, List >의 데이터 형식을 지원한다.
+Redis는 빠른 오픈 소스 인 메모리 키-값 데이터 구조 스토어이며, 다양한 인 메모리 데이터 구조 집합을 제공하므로 사용자 정의 애플리케이션을 손쉽게 생성할 수 있다.
 
 ---
 
@@ -84,3 +134,61 @@ ORM 프레임워크를 사용하기 위한 추가적인 러닝 커브가 필요�
 ## 데이터베이스 풀
 
 #### DB와 Client가 Connection을 어떻게 구성하는지 설명해 주세요
+- 웹 어플리케이션 서버(WAS)와 데이터베이스 간의 연결은 일반적으로 JDBC(Java Database Connectivity) 드라이버를 사용하여 구성된다.
+- JDBC는 자바 언어로 다양한 종류의 관계형 데이터베이스에 접속하고 SQL문을 수행하여 처리하고자 할 때 사용되는 표준 SQL 인터페이스 API이다.
+- DBMS 종류(MySQL, MsSQL, Oracle 등)에 상관 없이 하나의 JDBC API를 사용해서 데이터베이스 작업을 처리할 수 있게 된다.
+
+![image](https://github.com/gurrl9823/CS-JAVA-STUDY/assets/21374239/0d8462a0-a3c4-4dbd-b395-f421e222c127)
+
+1. 드라이버 로드
+- DB 종류에 맞는 드라이버를 로드합니다.
+- Class.forName("driver")을 사용해서 Driver Class를 로딩하여 객체를 생성합니다.
+- 생성된 객체는 DriverManager에 등록됩니다.
+- DriverManager 클래스는 로드된 JDBC드라이버를 통해서 Connection을 활성화해주는(만드는) 객체입니다.
+- Oracle JDBC_DRIVER : Class.forName("oracle.jdbc.driver.OracleDriver"); 
+- MSSQL JDBC_DRIVER : Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+- MySQL JDBC_DRIVER : Class.forName("org.git.mm.mysql.Driver"); OR Class.forName("com.mysql.jdbc.Driver");
+
+2. 데이터베이스 계정 연결
+- DriverManager.getConnection() 메소드로 Connection 객체 생성해줍니다.
+- DB_URL, DB_ID, DB_PW 을 매개변수로 갖습니다.
+- Connection은 DB와 연결하는 객체입니다.
+- Connection conn = DriverManager.getConnection(DB_URL, ID, PW);
+- Oracle DB_URL = jdbc:oracle:thin:@ip:1521:ORCL
+- MSSQL DB_URL = jdbc:sqlserver:ip:1433;DatabaseName=DB명
+- MySQL DB_URL = jdbc:mysql://ip:3306/DB명
+
+3. SQL문 실행을 위한 객체 생성
+3.1 파라미터를 입력 받아 동적인 쿼리문을 실행할 경우
+- PreparedStatement pstmt = conn.prepareStatement();
+3.2 정적인 쿼리문을 실행할 경우
+- Statement stmt = conn.createStatement();
+
+4. SQL문 실행
+String SQL = "insert into modell values(?,?,?)";
+4.1 executeUpdate()
+- insert, update, delete등 리턴 값이 필요 없는 쿼리문일 때 사용
+- pstmt.executeUpdate(SQL);
+- stmt.executeUpdate(SQL);
+4.2 executeQuery()
+- select등 리턴 값이 필요한 쿼리문일 때 사용
+- pstmt.executeQuery(SQL);
+- stmt.executeQuery(SQL);
+4.3 쿼리실행 후 값을 받아올 경우
+- ResultSet rs = null;
+- rs = pstmt.executeQuery();
+- 또는
+- rs = stmt.executeQuery();
+- 그 다음
+- while(rs.next()){
+-     String name = rs.getString("name");
+- }
+- rs.next()는 boolean을 리턴하는데 다음 레코드가 존재하면 true를 반환
+
+5. DB 연결 해제 (리소스 반납)
+- finally 블럭에서 close()를 이용하여 리소스를 생성한 역순으로 반납
+- conn.close()
+- pstmt.close()
+- stmt.close()
+
+![image](https://github.com/gurrl9823/CS-JAVA-STUDY/assets/21374239/b89ab9f4-8199-4727-9eba-a4fbaa0bd198)
