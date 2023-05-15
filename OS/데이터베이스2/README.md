@@ -25,13 +25,16 @@ Exclusive lock (배타적 잠금)
 원자성 (Atomicity)
 - 트랜잭션이 DB에 모두 반영되거나, 전혀 반영되지 않거나를 뜻한다.
 - All or Nothing을 생각하면 된다.
+
 일관성 (Consistency)
 - 트랜잭션 작업 처리의 결과가 항상 일관되어야 한다를 뜻한다.
 - 트랜잭션이 진행되는 동안에 데이터베이스가 변경 되더라도 업데이트된 데이터베이스로 트랜잭션이 진행되는것이 아니라, 처음에 트랜잭션을 진행 하기 위해 참조한 데이터베이스로 진행된다. 이렇게 함으로써 각 사용자는 일관성 있는 데이터를 볼 수 있는 것이다.
+
 독립성 (Isolation)
 - 둘 이상의 트랜잭션이 동시에 실행되고 있을 경우 하나의 트랜잭션은 다른 트랜잭션에 끼어들 수 없다.
 - 즉, 각각의 트랜잭션은 독립적이라 서로 간섭이 불가능하다.
 - 하나의 트랜잭션이 완료될때까지, 다른 트랜잭션이 해당 트랜잭션의 결과를 참조할 수 없다.
+
 지속성 (Durability)
 - 트랜잭션이 성공적으로 완료되면 영구적으로 결과에 반영되어야 함을 뜻한다.
 - 보통 commit 이 된다면 지속성은 만족할 수 있다.
@@ -39,6 +42,8 @@ Exclusive lock (배타적 잠금)
 
 #### 트랜잭션의 상태
 ![image](https://github.com/gurrl9823/CS-JAVA-STUDY/assets/21374239/654475a4-69b0-4f26-81e7-11ab231febd2)
+
+
 트랜잭션은 논리적으로 5가지의 상태에 있을 수 있다.
 Active
 - 트랜잭션이 현재 실행 중인 상태
@@ -159,17 +164,21 @@ ORM 프레임워크를 사용하기 위한 추가적인 러닝 커브가 필요�
 - MySQL DB_URL = jdbc:mysql://ip:3306/DB명
 
 3. SQL문 실행을 위한 객체 생성
+
 3.1 파라미터를 입력 받아 동적인 쿼리문을 실행할 경우
 - PreparedStatement pstmt = conn.prepareStatement();
+
 3.2 정적인 쿼리문을 실행할 경우
 - Statement stmt = conn.createStatement();
 
 4. SQL문 실행
 String SQL = "insert into modell values(?,?,?)";
+
 4.1 executeUpdate()
 - insert, update, delete등 리턴 값이 필요 없는 쿼리문일 때 사용
 - pstmt.executeUpdate(SQL);
 - stmt.executeUpdate(SQL);
+
 4.2 executeQuery()
 - select등 리턴 값이 필요한 쿼리문일 때 사용
 - pstmt.executeQuery(SQL);
@@ -181,7 +190,7 @@ String SQL = "insert into modell values(?,?,?)";
 - rs = stmt.executeQuery();
 - 그 다음
 - while(rs.next()){
--     String name = rs.getString("name");
+-   String name = rs.getString("name");
 - }
 - rs.next()는 boolean을 리턴하는데 다음 레코드가 존재하면 true를 반환
 
